@@ -14,6 +14,8 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private Transform _projectileParent;
     [SerializeField] [Min(1)] private int _projectilePoolSize = 8;
     [SerializeField] private LayerMask _obstacleMask;
+    [SerializeField] private PathSpline _pathSpline;
+    [SerializeField] private PathView _pathView;
 
     public override void InstallBindings()
     {
@@ -37,6 +39,13 @@ public class GameplayInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<ShotCharger>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<BlastResolver>().AsSingle().WithArguments(_obstacleMask);
+
+        Container.BindInstance(_pathSpline).AsSingle();
+        Container.BindInterfacesAndSelfTo<PathClearance>().AsSingle().WithArguments(_obstacleMask);
+        Container.BindInterfacesAndSelfTo<PathTraversal>().AsSingle();
+
+        Container.BindInstance(_pathView).AsSingle();
+        Container.QueueForInject(_pathView);
 
         Container.BindInstance(_playerSizeView).AsSingle();
         Container.BindInstance(_aimIndicatorView).AsSingle();

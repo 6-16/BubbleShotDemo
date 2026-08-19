@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 394477924}
   - component: {fileID: 394477925}
+  - component: {fileID: 394477926}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -164,7 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 394477926}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -182,6 +184,21 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &394477926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394477923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b343ee75f3486413aa5b3d5bb0a04d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiInstaller
+  _sceneConfig: {fileID: 11400000, guid: d67bd800a19db4775adfec26f0b87193, type: 2}
+  _rootPrefab: {fileID: 60083363231762440, guid: 53803b2ca772c4886b614d4f89b4d264, type: 3}
+  _cancelAction: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &399845495
 GameObject:
   m_ObjectHideFlags: 0

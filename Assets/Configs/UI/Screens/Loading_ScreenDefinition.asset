@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 764fb60498d674c348f6a4ef0688ec43, type: 3}
+  m_Name: Loading_ScreenDefinition
+  m_EditorClassIdentifier: Assembly-CSharp::UiScreenDefinition
+  _prefab: {fileID: 1099580250901021461, guid: 0c877115a455b493a81fbdd1125f87e8, type: 3}
+  _kind: 0
+  _sortPriority: 10
+  _preload: 0
+  _destroyOnClose: 0
+  _blocksBack: 0

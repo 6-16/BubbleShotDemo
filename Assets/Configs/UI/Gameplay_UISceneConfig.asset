@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UiSceneConfig
   _screens:
   - {fileID: 11400000, guid: 581b084f2082e4e2b8822cd29870d519, type: 2}
+  - {fileID: 11400000, guid: 0cb1f2e91961f49309073dcf68458cdd, type: 2}
   _entryScreen: {fileID: 11400000, guid: 581b084f2082e4e2b8822cd29870d519, type: 2}

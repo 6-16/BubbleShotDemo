@@ -9,6 +9,7 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
     private readonly PlayerSize _playerSize;
     private readonly PlayerRoot _player;
     private readonly ProjectileLauncher _launcher;
+    private readonly PathClearance _clearance;
     private readonly ShotConfig _config;
 
     private Projectile _charging;
@@ -22,6 +23,7 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
         PlayerSize playerSize,
         PlayerRoot player,
         ProjectileLauncher launcher,
+        PathClearance clearance,
         ShotConfig config)
     {
         _input = input ?? throw new ArgumentNullException(nameof(input));
@@ -29,6 +31,7 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
         _playerSize = playerSize ?? throw new ArgumentNullException(nameof(playerSize));
         _player = player != null ? player : throw new ArgumentNullException(nameof(player));
         _launcher = launcher ?? throw new ArgumentNullException(nameof(launcher));
+        _clearance = clearance ?? throw new ArgumentNullException(nameof(clearance));
         _config = config != null ? config : throw new ArgumentNullException(nameof(config));
     }
 
@@ -36,12 +39,14 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
     {
         _input.Began += OnBegan;
         _input.Released += OnReleased;
+        _clearance.Cleared += OnPathCleared;
     }
 
     public void Dispose()
     {
         _input.Began -= OnBegan;
         _input.Released -= OnReleased;
+        _clearance.Cleared -= OnPathCleared;
     }
 
     public void Tick()
@@ -57,10 +62,20 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
     private void OnBegan()
     {
         if (_charging != null) return;
+        if (_clearance.IsClear) return;
         if (_playerSize.IsDepleted) return;
 
         _radius = Mathf.Min(_config.StartRadius, MaximumRadius());
         _charging = _launcher.Spawn(ChargePosition(), _radius);
+    }
+
+    private void OnPathCleared()
+    {
+        if (_charging == null) return;
+
+        _launcher.Despawn(_charging);
+
+        _charging = null;
     }
 
     private void OnReleased()

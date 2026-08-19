@@ -16,6 +16,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private LayerMask _obstacleMask;
     [SerializeField] private PathSpline _pathSpline;
     [SerializeField] private PathView _pathView;
+    [SerializeField] private Door _door;
 
     public override void InstallBindings()
     {
@@ -46,6 +47,12 @@ public class GameplayInstaller : MonoInstaller
 
         Container.BindInstance(_pathView).AsSingle();
         Container.QueueForInject(_pathView);
+
+        Container.BindInstance(_door).AsSingle();
+        Container.QueueForInject(_door);
+
+        Container.BindInterfacesAndSelfTo<GameplayResult>().AsSingle();
+        Container.BindInterfacesTo<GameplayResultPresenter>().AsSingle();
 
         Container.BindInstance(_playerSizeView).AsSingle();
         Container.BindInstance(_aimIndicatorView).AsSingle();

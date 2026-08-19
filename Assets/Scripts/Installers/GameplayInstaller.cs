@@ -5,7 +5,11 @@ public class GameplayInstaller : MonoInstaller
 {
     [SerializeField] private PlayerConfig _playerConfig;
     [SerializeField] private ShotConfig _shotConfig;
+    [SerializeField] private PlayerRoot _playerRoot;
     [SerializeField] private PlayerSizeView _playerSizeView;
+    [SerializeField] private ShotInputReader _shotInputReader;
+    [SerializeField] private AimIndicatorView _aimIndicatorView;
+    [SerializeField] private Camera _gameplayCamera;
 
     public override void InstallBindings()
     {
@@ -14,7 +18,16 @@ public class GameplayInstaller : MonoInstaller
 
         Container.Bind<PlayerSize>().AsSingle().NonLazy();
 
+        Container.BindInstance(_playerRoot).AsSingle();
+        Container.BindInstance(_gameplayCamera).AsSingle();
+
+        Container.Bind<IShotInput>().FromInstance(_shotInputReader).AsSingle();
+        Container.BindInterfacesAndSelfTo<ShotAimer>().AsSingle();
+
         Container.BindInstance(_playerSizeView).AsSingle();
+        Container.BindInstance(_aimIndicatorView).AsSingle();
+
         Container.QueueForInject(_playerSizeView);
+        Container.QueueForInject(_aimIndicatorView);
     }
 }

@@ -10,6 +10,9 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private ShotInputReader _shotInputReader;
     [SerializeField] private AimIndicatorView _aimIndicatorView;
     [SerializeField] private Camera _gameplayCamera;
+    [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private Transform _projectileParent;
+    [SerializeField] [Min(1)] private int _projectilePoolSize = 8;
 
     public override void InstallBindings()
     {
@@ -23,6 +26,14 @@ public class GameplayInstaller : MonoInstaller
 
         Container.Bind<IShotInput>().FromInstance(_shotInputReader).AsSingle();
         Container.BindInterfacesAndSelfTo<ShotAimer>().AsSingle();
+
+        Container.BindMemoryPool<Projectile, ProjectilePool>()
+            .WithInitialSize(_projectilePoolSize)
+            .FromComponentInNewPrefab(_projectilePrefab)
+            .UnderTransform(_projectileParent);
+
+        Container.BindInterfacesAndSelfTo<ProjectileLauncher>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ShotCharger>().AsSingle();
 
         Container.BindInstance(_playerSizeView).AsSingle();
         Container.BindInstance(_aimIndicatorView).AsSingle();

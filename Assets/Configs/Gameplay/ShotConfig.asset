@@ -16,4 +16,5 @@ MonoBehaviour:
   _startRadius: 0.1
   _projectileSpeed: 18
   _blastRadiusMultiplier: 1
+  _projectileLifetime: 3
   _aimConeHalfAngle: 45

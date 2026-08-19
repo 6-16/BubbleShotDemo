@@ -13,6 +13,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private Transform _projectileParent;
     [SerializeField] [Min(1)] private int _projectilePoolSize = 8;
+    [SerializeField] private LayerMask _obstacleMask;
 
     public override void InstallBindings()
     {
@@ -34,6 +35,8 @@ public class GameplayInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<ProjectileLauncher>().AsSingle();
         Container.BindInterfacesAndSelfTo<ShotCharger>().AsSingle();
+
+        Container.BindInterfacesAndSelfTo<BlastResolver>().AsSingle().WithArguments(_obstacleMask);
 
         Container.BindInstance(_playerSizeView).AsSingle();
         Container.BindInstance(_aimIndicatorView).AsSingle();

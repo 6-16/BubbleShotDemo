@@ -3,6 +3,7 @@ using System;
 public class PlayerSize
 {
     private readonly float _minimumVolume;
+    private readonly float _initialVolume;
 
     private float _volume;
     private float _radius;
@@ -12,6 +13,7 @@ public class PlayerSize
     public float Volume => _volume;
     public float Radius => _radius;
     public float MinimumVolume => _minimumVolume;
+    public float InitialVolume => _initialVolume;
     public bool IsDepleted => _volume <= _minimumVolume;
 
     public PlayerSize(PlayerConfig config)
@@ -19,11 +21,22 @@ public class PlayerSize
         if (config == null) throw new ArgumentNullException(nameof(config));
 
         _minimumVolume = config.MinimumVolume;
+        _initialVolume = config.InitialVolume;
 
         SetVolume(config.InitialVolume);
     }
 
     public float AvailableVolume => Math.Max(0f, _volume - _minimumVolume);
+
+    public float NormalizedAvailable
+    {
+        get
+        {
+            float usableRange = _initialVolume - _minimumVolume;
+
+            return usableRange <= 0f ? 0f : Math.Clamp(AvailableVolume / usableRange, 0f, 1f);
+        }
+    }
 
     public float Consume(float volume)
     {

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98a21ff19c214821a58ec6a3cc94a7c, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
-  _initialRadius: 2.5
+  _initialRadius: 2
   _minimumRadius: 0.15
+  _movementSpeed: 6
+  _clearanceMultiplier: 1.1

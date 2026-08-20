@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShotConfig
   m_EditorClassIdentifier: Assembly-CSharp::ShotConfig
   _growthRatePerSecond: 0.35
-  _startRadius: 0.1
+  _startRadius: 0.3
   _projectileSpeed: 18
   _blastRadiusMultiplier: 1
   _projectileLifetime: 3

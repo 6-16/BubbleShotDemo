@@ -13,6 +13,7 @@ public class PathTraversal : IInitializable, ITickable, IDisposable
     private float _travelledDistance;
     private bool _isTraversing;
 
+    public event Action Started;
     public event Action Finished;
 
     public bool IsTraversing => _isTraversing;
@@ -63,6 +64,8 @@ public class PathTraversal : IInitializable, ITickable, IDisposable
 
         _travelledDistance = 0f;
         _isTraversing = true;
+
+        Started?.Invoke();
     }
 
     private Vector3 PositionAt(float distance)

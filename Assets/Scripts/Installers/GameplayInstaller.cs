@@ -7,6 +7,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private ShotConfig _shotConfig;
     [SerializeField] private PlayerRoot _playerRoot;
     [SerializeField] private PlayerSizeView _playerSizeView;
+    [SerializeField] private PlayerBounceView _playerBounceView;
     [SerializeField] private ShotInputReader _shotInputReader;
     [SerializeField] private AimIndicatorView _aimIndicatorView;
     [SerializeField] private Camera _gameplayCamera;
@@ -57,7 +58,10 @@ public class GameplayInstaller : MonoInstaller
         Container.BindInstance(_playerSizeView).AsSingle();
         Container.BindInstance(_aimIndicatorView).AsSingle();
 
+        Container.BindInstance(_playerBounceView).AsSingle();
+
         Container.QueueForInject(_playerSizeView);
+        Container.QueueForInject(_playerBounceView);
         Container.QueueForInject(_aimIndicatorView);
     }
 }

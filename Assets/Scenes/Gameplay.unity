@@ -2655,6 +2655,7 @@ MonoBehaviour:
   _shotConfig: {fileID: 11400000, guid: 3ad513aa9b72743bd9255e52e95800bc, type: 2}
   _playerRoot: {fileID: 1344569466}
   _playerSizeView: {fileID: 1344569464}
+  _playerBounceView: {fileID: 1344569467}
   _shotInputReader: {fileID: 1337318615}
   _aimIndicatorView: {fileID: 1619100686}
   _gameplayCamera: {fileID: 798204480}
@@ -3150,6 +3151,7 @@ GameObject:
   - component: {fileID: 493782978}
   - component: {fileID: 493782977}
   - component: {fileID: 493782976}
+  - component: {fileID: 493782979}
   m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
@@ -3250,6 +3252,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493782974}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &493782979
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493782974}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 413237735767d402fae4e683e64fe8a1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &495439709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8062,6 +8086,7 @@ GameObject:
   - component: {fileID: 1344569465}
   - component: {fileID: 1344569464}
   - component: {fileID: 1344569466}
+  - component: {fileID: 1344569467}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -8111,6 +8136,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f794d74983a5441a89701ca89859ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRoot
+--- !u!114 &1344569467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344569463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb5608fd7d6448b6a8c443d216a0df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBounceView
+  _animator: {fileID: 493782979}
 --- !u!1001 &1356576464
 PrefabInstance:
   m_ObjectHideFlags: 0

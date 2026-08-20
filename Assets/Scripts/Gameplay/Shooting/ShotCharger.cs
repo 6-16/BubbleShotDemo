@@ -14,6 +14,7 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
 
     private Projectile _charging;
     private float _radius;
+    private float _chargedVolume;
 
     public bool IsCharging => _charging != null;
 
@@ -53,7 +54,11 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
     {
         if (_charging == null) return;
 
-        _radius = Mathf.Min(_radius + _config.GrowthRatePerSecond * Time.deltaTime, MaximumRadius());
+        float targetRadius = Mathf.Min(_radius + _config.GrowthRatePerSecond * Time.deltaTime, MaximumRadius());
+
+        DrawFromPlayer(BallVolume.FromRadius(targetRadius));
+
+        if (_charging == null) return;
 
         _charging.SetRadius(_radius);
         _charging.Place(ChargePosition());
@@ -65,7 +70,11 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
         if (_clearance.IsClear) return;
         if (_playerSize.IsDepleted) return;
 
-        _radius = Mathf.Min(_config.StartRadius, MaximumRadius());
+        _radius = 0f;
+        _chargedVolume = 0f;
+
+        DrawFromPlayer(BallVolume.FromRadius(Mathf.Min(_config.StartRadius, MaximumRadius())));
+
         _charging = _launcher.Spawn(ChargePosition(), _radius);
     }
 
@@ -73,9 +82,12 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
     {
         if (_charging == null) return;
 
+        _playerSize.Restore(_chargedVolume);
         _launcher.Despawn(_charging);
 
         _charging = null;
+        _chargedVolume = 0f;
+        _radius = 0f;
     }
 
     private void OnReleased()
@@ -83,16 +95,27 @@ public class ShotCharger : IInitializable, ITickable, IDisposable
         if (_charging == null) return;
 
         Projectile projectile = _charging;
-        _charging = null;
 
-        _playerSize.Consume(projectile.Volume);
+        _charging = null;
+        _chargedVolume = 0f;
+        _radius = 0f;
 
         _launcher.Launch(projectile, _aimer.Direction);
     }
 
+    private void DrawFromPlayer(float targetVolume)
+    {
+        float requested = targetVolume - _chargedVolume;
+
+        if (requested <= 0f) return;
+
+        _chargedVolume += _playerSize.Consume(requested);
+        _radius = BallVolume.ToRadius(_chargedVolume);
+    }
+
     private float MaximumRadius()
     {
-        return BallVolume.ToRadius(_playerSize.Volume);
+        return BallVolume.ToRadius(_playerSize.Volume + _chargedVolume);
     }
 
     private Vector3 ChargePosition()

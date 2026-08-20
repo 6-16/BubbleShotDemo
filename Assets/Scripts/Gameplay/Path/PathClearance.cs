@@ -50,6 +50,7 @@ public class PathClearance : IInitializable, IDisposable
     public void Evaluate()
     {
         if (_isClear) return;
+        if (_playerSize.IsDepleted) return;
         if (!_spline.IsValid) return;
 
         if (IsBlocked()) return;

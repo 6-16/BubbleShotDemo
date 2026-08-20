@@ -49,6 +49,13 @@ public class PlayerSize
         return consumed;
     }
 
+    public void Restore(float volume)
+    {
+        if (volume <= 0f) return;
+
+        SetVolume(Math.Min(_volume + volume, _initialVolume));
+    }
+
     private void SetVolume(float volume)
     {
         _volume = Math.Max(0f, volume);

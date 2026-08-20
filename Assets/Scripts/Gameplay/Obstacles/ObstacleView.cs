@@ -34,6 +34,9 @@ public class ObstacleView : MonoBehaviour
         {
             await PlayExplosionAsync();
         }
+        catch (OperationCanceledException)
+        {
+        }
         catch (Exception exception)
         {
             Debug.LogException(exception);
@@ -58,10 +61,22 @@ public class ObstacleView : MonoBehaviour
             float progress = Mathf.Clamp01(elapsed / _explosionDuration);
             _bodyTransform.localScale = Vector3.Lerp(_initialScale, Vector3.zero, progress);
 
-            await Awaitable.NextFrameAsync();
+            await Awaitable.NextFrameAsync(destroyCancellationToken);
         }
 
+        await WaitForParticlesAsync();
+
+        if (this == null) return;
+
         gameObject.SetActive(false);
+    }
+
+    private async Awaitable WaitForParticlesAsync()
+    {
+        while (_explosionParticles != null && _explosionParticles.IsAlive(true))
+        {
+            await Awaitable.NextFrameAsync(destroyCancellationToken);
+        }
     }
 
     private void ApplyColor(Color color)
